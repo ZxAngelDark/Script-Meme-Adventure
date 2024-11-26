@@ -1,0 +1,164 @@
+-- Script da GUI
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local AutoFarmButton = Instance.new("TextButton")
+local AutoFarmLabel = Instance.new("TextLabel")
+local AutoTpButton = Instance.new("TextButton")
+local AutoTpLabel = Instance.new("TextLabel")
+
+-- Propriedades do ScreenGui
+ScreenGui.Name = "AutoFarmGui"
+ScreenGui.Parent = game.CoreGui
+
+-- Propriedades do Frame
+Frame.Parent = ScreenGui
+Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Frame.Position = UDim2.new(0.5, -150, 0.5, -100)
+Frame.Size = UDim2.new(0, 300, 0, 200)
+Frame.Active = true
+Frame.Draggable = true
+
+-- Propriedades do AutoFarmLabel
+AutoFarmLabel.Parent = Frame
+AutoFarmLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmLabel.Position = UDim2.new(0.05, 0, 0.1, 0)
+AutoFarmLabel.Size = UDim2.new(0.4, 0, 0.3, 0)
+AutoFarmLabel.Font = Enum.Font.SourceSans
+AutoFarmLabel.Text = "Auto Click To Collect"
+AutoFarmLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutoFarmLabel.TextScaled = true
+
+-- Propriedades do AutoFarmButton
+AutoFarmButton.Parent = Frame
+AutoFarmButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+AutoFarmButton.Position = UDim2.new(0.55, 0, 0.1, 0)
+AutoFarmButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+AutoFarmButton.Font = Enum.Font.SourceSans
+AutoFarmButton.Text = "Desativado"
+AutoFarmButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoFarmButton.TextScaled = true
+AutoFarmButton.MouseButton1Click:Connect(function()
+    _G.autoFarm = not _G.autoFarm
+    if _G.autoFarm then
+        AutoFarmButton.Text = "Ativado"
+    else
+        AutoFarmButton.Text = "Desativado"
+    end
+end)
+
+-- Propriedades do AutoTpLabel
+AutoTpLabel.Parent = Frame
+AutoTpLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+AutoTpLabel.Position = UDim2.new(0.05, 0, 0.6, 0)
+AutoTpLabel.Size = UDim2.new(0.4, 0, 0.3, 0)
+AutoTpLabel.Font = Enum.Font.SourceSans
+AutoTpLabel.Text = "Auto Teleport"
+AutoTpLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+AutoTpLabel.TextScaled = true
+
+-- Propriedades do AutoTpButton
+AutoTpButton.Parent = Frame
+AutoTpButton.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+AutoTpButton.Position = UDim2.new(0.55, 0, 0.6, 0)
+AutoTpButton.Size = UDim2.new(0.4, 0, 0.3, 0)
+AutoTpButton.Font = Enum.Font.SourceSans
+AutoTpButton.Text = "Desativado"
+AutoTpButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+AutoTpButton.TextScaled = true
+AutoTpButton.MouseButton1Click:Connect(function()
+    _G.autoTeleport = not _G.autoTeleport
+    if _G.autoTeleport then
+        AutoTpButton.Text = "Ativado"
+    else
+        AutoTpButton.Text = "Desativado"
+    end
+end)
+
+-- Script de Auto Farm
+function proxi()
+    spawn(function()
+        for _, pro in ipairs(workspace:GetDescendants()) do
+            if pro:IsA("ProximityPrompt") then
+                fireproximityprompt(pro)
+            end
+        end
+    end)
+end
+
+-- Loop do Auto Farm
+spawn(function()
+    while wait(0.1) do
+        if _G.autoFarm then
+            proxi()
+        end
+    end
+end)
+
+-- Script de Auto Teleporte
+local positions = {
+    Vector3.new(2661, 16, 73),
+    Vector3.new(2507, 16, -352),
+    Vector3.new(2381, 16, -617),
+    Vector3.new(2454, 23, -685),
+    Vector3.new(2191, 16, -966),
+    Vector3.new(2494, 16, -1055),
+    Vector3.new(2801, 23, -243),
+    Vector3.new(2909, 16, -899),
+    Vector3.new(2983, 16, -1149),
+    Vector3.new(3148, 16, -744),
+    Vector3.new(3114, 22, -533),
+    Vector3.new(3235, 16, -657),
+    Vector3.new(3428, 16, -928),
+    Vector3.new(4101, 16, -1202),
+    Vector3.new(4029, 16, -873),
+    Vector3.new(3970, 16, -776),
+    Vector3.new(3788, 16, -861),
+    Vector3.new(3903, 16, -379),
+    Vector3.new(3670, 16, -446),
+    Vector3.new(3553, 16, -439),
+    Vector3.new(3908, 16, -380),
+    Vector3.new(3397, 23, -88),
+    Vector3.new(3711, 16, -92),
+    Vector3.new(3971, 16, 85),
+    Vector3.new(3650, 16, 147),
+    Vector3.new(3710, 16, -93),
+    Vector3.new(3774, 25, 533),
+    Vector3.new(2917, 28, 498),
+    Vector3.new(2497, 22, -125),
+    Vector3.new(2491, 16, 107),
+    Vector3.new(2231, 16, 68),
+    Vector3.new(2522, 16, 197),
+    Vector3.new(2282, 16, 509),
+    Vector3.new(2228, 16, 486),
+    Vector3.new(2746, 17, 35),
+    Vector3.new(2708, 17, 73),
+    Vector3.new(2747, 17, 102),
+    Vector3.new(2775, 17, 72),
+    Vector3.new(3322, 16, -420),
+    Vector3.new(3355, 16, -441),
+    Vector3.new(3331, 16, -480),
+    Vector3.new(3288, 16, -453),
+    Vector3.new(3070, 18, -259),
+    Vector3.new(2230, 16, 70),
+    Vector3.new(3053, 18, -102)
+}
+
+-- Função de Auto Teleporte
+function autoTeleport()
+    while _G.autoTeleport do
+        for _, pos in ipairs(positions) do
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(pos)
+            wait(0.1)
+        end
+    end
+end
+
+-- Loop do Auto Teleporte
+spawn(function()
+    while true do
+        if _G.autoTeleport then
+            autoTeleport()
+        end
+        wait(0.1)
+    end
+end)
